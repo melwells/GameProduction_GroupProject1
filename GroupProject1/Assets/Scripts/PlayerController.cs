@@ -21,15 +21,8 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
       PlayerInput();
-
       Move (direction);
-    }
-
-    // Update is called once per frame
-    void FixedUpdate()
-    {
-
-
+      RotateSquirrel();
     }
 
 //find Input
@@ -60,6 +53,32 @@ public class PlayerController : MonoBehaviour
     void Move(Vector2 d)
     {
       transform.localPosition += (Vector3)d * speed * Time.deltaTime;
+    }
 
+    void RotateSquirrel()
+    {
+      if (direction == Vector2.left)
+      {
+        transform.localScale = new Vector3 ((float)1.5, (float)1.5, 1);
+        transform.localRotation =  Quaternion.Euler (0, 0, 0);
+      }
+
+      else if (direction == Vector2.right)
+      {
+        transform.localScale = new Vector3 ((float)-1.5, (float)1.5, 1);
+        transform.localRotation =  Quaternion.Euler (0, 0, 0);
+      }
+
+      else if (direction == Vector2.up)
+      {
+        transform.localScale = new Vector3 ((float)1.5, (float)-1.5, 1);
+        transform.localRotation =  Quaternion.Euler (0, 0, -90);
+      }
+
+      else if (direction == Vector2.down)
+      {
+        transform.localScale = new Vector3 ((float)1.5, (float)1.5, 1);
+        transform.localRotation =  Quaternion.Euler (0, 0, 90);
+      }
     }
 }

@@ -5,17 +5,21 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-  private Rigidbody2D rb2d;
-
   public float speed = 5.0f;
 
   private Vector2 direction = Vector2.zero;
+  private int acornCount;
+  private Rigidbody2D rb2d;
+  private int score;
+  private int lives;
 
     // Start is called before the first frame update
     void Start()
     {
       //rb2d = GetComponent<Rigidbody2D>();
-
+       acornCount = 0;
+       score = 0;
+       lives = 3;
     }
 
     void Update()
@@ -81,4 +85,49 @@ public class PlayerController : MonoBehaviour
         transform.localRotation =  Quaternion.Euler (0, 0, 90);
       }
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        //Check the provided Collider2D parameter other to see if it is tagged "PickUp", if it is...
+        if (other.gameObject.CompareTag("AcornPickup"))
+        {
+          other.gameObject.SetActive(false);
+          acornCount += 1;
+          score += 1;
+          Debug.Log ("Acorns picked up " + acornCount);
+        }
+
+        else if (other.gameObject.CompareTag("PizzaPickUp"))
+        {
+          other.gameObject.SetActive(false);
+          score += 500;
+          Debug.Log("Pizza Crust aquired");
+        }
+
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+          Respawn();
+        }
+
+        NextLevel();
+      }
+
+      void NextLevel()
+      {
+        if ( acornCount == 220)
+        Debug.Log ("All pickups collected");
+      }
+
+      void Respawn()
+      {
+        direction = Vector2.zero;
+        transform.localPosition = new Vector3 ((float)14.3, (float)-7, 0);
+        lives = lives - 1;
+
+        if (lives <= 0)
+        {
+          Destroy (this);
+        }
+      }
+
 }

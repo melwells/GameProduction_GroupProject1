@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
   private Rigidbody2D rb2d;
   private int score;
   private int lives;
+  private bool pizzaBool;
 
     // Start is called before the first frame update
     void Start()
@@ -20,6 +21,7 @@ public class PlayerController : MonoBehaviour
        acornCount = 0;
        score = 0;
        lives = 3;
+       pizzaBool = false;
     }
 
     void Update()
@@ -102,15 +104,21 @@ public class PlayerController : MonoBehaviour
           other.gameObject.SetActive(false);
           score += 500;
           Debug.Log("Pizza Crust aquired");
+
+          pizzaBool = true;
         }
 
-        else if (other.gameObject.CompareTag("Enemy"))
+        else if (other.gameObject.CompareTag("Enemy") && pizzaBool != true)
         {
           Respawn();
         }
 
-        NextLevel();
+        else if (other.gameObject.CompareTag("Enemy") && pizzaBool == true)
+        {
+          EnemyRun();
+        }
       }
+
 
       void NextLevel()
       {
@@ -128,6 +136,12 @@ public class PlayerController : MonoBehaviour
         {
           Destroy (this);
         }
+      }
+
+      void EnemyRun()
+      {
+
+
       }
 
 }

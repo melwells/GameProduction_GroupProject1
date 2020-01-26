@@ -8,6 +8,8 @@ TagManager:
   - AcornPickup
   - PizzaPickUp
   - Enemy
+  - EnemyDanger
+  - EnemyNaked
   layers:
   - Default
   - TransparentFX

@@ -4,15 +4,21 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+  public Transform[] waypoints;
+  int current = 0;
 
-    // Update is called once per frame
-    void Update()
+  public float speed = 8f;
+  float wayRadius = 1;
+
+  void FixedUpdate()
+  {
+    if (Vector2.Distance(waypoints[current].transform.position, transform.position) < wayRadius)
     {
-        
+      current ++;
+      if (current >= waypoints.Length)
+      {
+        current = 0;
+      }
     }
+  }
 }
